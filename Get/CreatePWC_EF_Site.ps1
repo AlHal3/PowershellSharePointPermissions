@@ -33,8 +33,14 @@ Function New-WorkdayDataList($ListName, $ListUrl, $Connection) {
 	#Set-PnPGroupPermissions -Identity 'RES-SP-DATA-BHF-CIR-DEV_Test-RO' -List $ListName -AddRole Read
 	#Set-PnPGroupPermissions -Identity 'RES-SP-DATA-BHF-CIR-DEV_test-RW' -List $ListName -AddRole Contribute
 	
-	Set-PnPFolderPermission -List $ListName -Identity $ListName'/Input' -Group 'HROwnersTest' -AddRole 'Contribute' -ClearExisting
-	Set-PnPFolderPermission -List $ListName -Identity $ListName'/Output' -Group 'HROwnersTest' -AddRole 'Read' -ClearExisting
+	Set-PnPList -Identity $ListName -BreakRoleInheritance #not sure if I need this -CopyRoleAssignments
+	#Grant permission on List to User
+    #Set-PnPListPermission -Identity $ListName -AddRole "Edit" -User $UserID
+ 
+    #Grant permission on list to Group
+    Set-PnPListPermission -Identity $ListName -AddRole 'Edit' -Group 'HROwnersTest'
+	#Set-PnPFolderPermission -List $ListName -Identity $ListName'/Input' -Group 'HROwnersTest' -AddRole 'Contribute' -ClearExisting
+	#Set-PnPFolderPermission -List $ListName -Identity $ListName'/Output' -Group 'HROwnersTest' -AddRole 'Read' -ClearExisting
 	}
 
 #Read more: https://www.sharepointdiary.com/2017/03/add-yes-no-check-box-field-to-sharepoint-list-using-powershell.html#ixzz7PfnvrnL0

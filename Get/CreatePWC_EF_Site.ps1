@@ -22,25 +22,20 @@ If ($null -eq ${Function New-Guid}) {
 
 
 Function New-WorkdayDataList($ListName, $ListUrl, $Connection) {
-    #$ListName = "Rejections"
-    #$ListUrl = "Documents/Rejections"
+ 
 	If($null -ne (Get-PnPList -Identity $ListName -ErrorAction SilentlyContinue)){
        Remove-PnPList -Force -Identity $ListName -Connection $connection 
 	}
 	New-PnPList -Title $ListName -Url $ListUrl -Template DocumentLibrary
 	Add-PnPFolder -Name 'Input' -Folder $ListName
 	Add-PnPFolder -Name 'Output' -Folder $ListName
-	#Set-PnPGroupPermissions -Identity 'RES-SP-DATA-BHF-CIR-DEV_Test-RO' -List $ListName -AddRole Read
-	#Set-PnPGroupPermissions -Identity 'RES-SP-DATA-BHF-CIR-DEV_test-RW' -List $ListName -AddRole Contribute
-	
 	Set-PnPList -Identity $ListName -BreakRoleInheritance #not sure if I need this -CopyRoleAssignments
-	#Grant permission on List to User
-    #Set-PnPListPermission -Identity $ListName -AddRole "Edit" -User $UserID
- 
+
+	   
     #Grant permission on list to Group
-    Set-PnPListPermission -Identity $ListName -AddRole 'Edit' -Group 'HROwnersTest'
-	#Set-PnPFolderPermission -List $ListName -Identity $ListName'/Input' -Group 'HROwnersTest' -AddRole 'Contribute' -ClearExisting
-	#Set-PnPFolderPermission -List $ListName -Identity $ListName'/Output' -Group 'HROwnersTest' -AddRole 'Read' -ClearExisting
+    #Set-PnPListPermission -Identity $ListName -AddRole 'Contribute' -Group 'HROwnersTest'
+	Set-PnPListPermission -Identity $ListName -AddRole 'Full Control' -Group 'TESTEFStuff Owners'
+
 	}
 
 #Read more: https://www.sharepointdiary.com/2017/03/add-yes-no-check-box-field-to-sharepoint-list-using-powershell.html#ixzz7PfnvrnL0
